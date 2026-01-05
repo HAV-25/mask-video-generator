@@ -43,8 +43,8 @@ app.post('/create-mask-video', async (req, res) => {
 
     // FFmpeg command to create mask video
     const ffmpegCmd = `ffmpeg -f lavfi -i color=c=black:s=${video_width}x${video_height}:d=${video_duration_sec} \
-      -vf "drawbox=y=${mask_y_start}:color=white@1:width=${video_width}:height=${mask_height}:t=fill" \
-      -r 30 -pix_fmt yuv420p ${outputPath}`;
+     -vf "drawbox=y=${mask_y_start}:color=white@1:width=${video_width}:height=${mask_height}:t=fill" \
+     -r 30 -pix_fmt yuv420p -threads 2 -preset ultrafast -crf 28 ${outputPath}`;
 
     console.log('Executing FFmpeg command...');
     await execAsync(ffmpegCmd);
